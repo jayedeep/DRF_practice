@@ -40,3 +40,30 @@ def create_student(request):
             return JsonResponse(res, safe=False)
     else:
         return redirect('all_student')
+
+
+@csrf_exempt
+def update_student(request,id):
+    student = get_object_or_404(Student,id = id)
+    serializer = StudentSerializer(student)
+    data = serializer.data
+    if request.method == 'PUT':
+        bytes_request_data = request.body
+        bytes_to_string = io.BytesIO(bytes_request_data)
+        python_data = JSONParser().parse(bytes_to_string)
+        print(">>>>",python_data)
+        serializer = StudentSerializer(student,data = python_data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            res = {'msg': 'Stundent Updated','updated_data':serializer.data}
+            return JsonResponse(res, safe=False)
+        else:
+            res = {'msg': 'Stundent Updated Failed', 'errors': serializer.errors}
+            return JsonResponse(res, safe=False)
+    return JsonResponse(data, safe=False)
+
+
+def delete_student(request,id):
+    student =  Student.objects.filter(id=id)
+    student.delete()
+    return redirect('all_student')
