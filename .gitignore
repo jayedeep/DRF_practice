@@ -1,0 +1,19 @@
+# Ignore specific file
+example.txt
+
+# Ignore all files with a .log extension
+*.log
+
+# Ignore all files in a specific directory
+venv/
+.idea/
+__pycache__/
+
+# Ignore all .pyc files (Python compiled files)
+*.pyc
+
+# Ignore all files in a specific directory and its subdirectories
+node_modules/
+
+# Ignore a specific file in a specific directory
+myfolder/secrets.txt
