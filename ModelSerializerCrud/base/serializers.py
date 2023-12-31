@@ -3,11 +3,11 @@ from .models import Student
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    email_custom = serializers.CharField(source = 'email')
     class Meta:
         model = Student
-        fields = ['id', 'name', 'email', 'bod']
+        fields = ['id', 'name', 'email', 'bod','email_custom']
         extra_kwargs = {'email':{'read_only':True}}
-
 
 
     def to_representation(self,instance):
